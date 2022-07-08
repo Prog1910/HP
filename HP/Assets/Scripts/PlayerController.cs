@@ -7,13 +7,13 @@ enum Position
     Right
 }
 
-public class PlayerComtroller : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     private CharacterController _characterController;
     private Vector3 _moveDirection;
     private Position _currentPosition = Position.Middle;
-    [SerializeField] private float Speed = 5f;
-    [SerializeField] private float LerpRate = 0.5f;
+    [SerializeField] private float Speed = 25f;
+    [SerializeField] private float LerpRate = 75f;
     [SerializeField] private float LaneDistance = 2.25f;
 
     private void Start()
