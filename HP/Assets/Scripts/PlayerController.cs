@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private Position _currentPosition = Position.Middle;
     [SerializeField] private float Speed = 25f;
     [SerializeField] private float LerpRate = 75f;
-    [SerializeField] private float LaneDistance = 2.25f;
+    [SerializeField] private float LaneDistance = 7.75f;
 
     private void Start()
     {
