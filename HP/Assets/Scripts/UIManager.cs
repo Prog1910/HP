@@ -6,25 +6,22 @@ namespace HighwayPursuit
 {
     public class UIManager : MonoBehaviour
     {
-        public static UIManager singleton;
-
-        [SerializeField] private GameObject _mainMenuPanel;
-        [SerializeField] private GameObject _gameMenuPanel;
-        [SerializeField] private GameObject _gameOverPanel;
-
+        public static UIManager Singleton;
+        [SerializeField] private GameObject _mainMenuPanel, _gameMenuPanel, _gameOverPanel;
         [SerializeField] private Text _distanceText;
-
         public Text DistanceText { get => _distanceText; }
 
         private void Awake()
         {
-            if (singleton == null)
-                singleton = this;
+            if (Singleton == null)
+                Singleton = this;
+            else
+                Destroy(gameObject);
         }
 
         private void Start()
         {
-            GameManager.singleton.GameStatus = GameStatus.NONE;
+            GameManager.Singleton.GameStatus = GameStatus.NONE;
         }
 
         public void PlayButton()

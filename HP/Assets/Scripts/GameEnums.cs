@@ -8,4 +8,11 @@ namespace HighwayPursuit
         PLAYING,
         FAILED
     }
+
+    public enum SwipeType
+    {
+        LEFT,
+        NONE,
+        RIGHT
+    }
 }
