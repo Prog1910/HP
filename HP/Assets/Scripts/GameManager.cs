@@ -6,7 +6,7 @@ namespace HighwayPursuit
     {
         public static GameManager Singleton;
         [HideInInspector] public GameStatus GameStatus = GameStatus.NONE;
-        [HideInInspector] public int CurrentCarIndex = 0;
+        [HideInInspector] public int CurrentCarIndex;
 
         private void Awake()
         {

@@ -37,7 +37,7 @@ namespace HighwayPursuit
 
         public void GameOver()
         {
-            _gameMenuPanel.SetActive(true);
+            _gameOverPanel.SetActive(true);
         }
     }
 }

@@ -6,7 +6,10 @@ namespace HighwayPursuit
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerController : MonoBehaviour
     {
-        private float _endXPosition = 0f;
+        [SerializeField] private float _laneWidth = 3f;
+        [SerializeField] private float _DOMoveXDuration = 0.15f;
+        [SerializeField] private float _crashForce = 100f;
+        private float _endXPosition;
         private Rigidbody _playerRigidbody;
         private Collider _playerCollider;
 
@@ -37,11 +40,11 @@ namespace HighwayPursuit
                     DOTween.Kill(this);
                     _playerRigidbody.isKinematic = false;
                     _playerRigidbody.useGravity = true;
-                    _playerRigidbody.AddForce(Random.insideUnitCircle.normalized * 100f);
+                    _playerRigidbody.AddForce(Random.insideUnitCircle.normalized * _crashForce);
                 }
             }
         }
-      
+
         public void GameStarted()
         {
             InputManager.Singleton.SwipeCallback += SwipeMethod;
@@ -62,17 +65,15 @@ namespace HighwayPursuit
             switch (swipeType)
             {
                 case SwipeType.LEFT:
-                    _endXPosition = transform.position.x - 3;
+                    _endXPosition = transform.position.x - _laneWidth;
                     break;
                 case SwipeType.RIGHT:
-                    _endXPosition = transform.position.x + 3;
+                    _endXPosition = transform.position.x + _laneWidth;
                     break;
             }
 
-            _endXPosition = Mathf.Clamp(_endXPosition, -3, 3);
-            transform.DOMoveX(_endXPosition, 0.15f);
+            _endXPosition = Mathf.Clamp(_endXPosition, -_laneWidth, _laneWidth);
+            transform.DOMoveX(_endXPosition, _DOMoveXDuration);
         }
-
-
     }
 }

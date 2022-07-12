@@ -6,7 +6,7 @@ namespace HighwayPursuit
     public class InputManager : MonoBehaviour
     {
         public static InputManager Singleton;
-        private Vector2 _startPosition, _endPosition, _difference;
+        private Vector2 _startPosition, _endPosition;
         private SwipeType _swipeType = SwipeType.NONE;
         private float _swipeThreshold = 0.15f;
         private float _swipeTimeLimit = 0.25f;
@@ -35,21 +35,18 @@ namespace HighwayPursuit
                 _endTime = Time.time;
 
                 if (_endTime - _startTime <= _swipeTimeLimit)
-                    DetectSwipeMethod();
+                    DetectSwipe();
             }
         }
 
-        private void DetectSwipeMethod()
+        private void DetectSwipe()
         {
             _swipeType = SwipeType.NONE;
-            _difference = _endPosition - _startPosition;
+            Vector2 difference = _endPosition - _startPosition;
 
-            if (_difference.magnitude > _swipeThreshold * Screen.width)
+            if (difference.magnitude > _swipeThreshold * Screen.width)
             {
-                if (_difference.x > 0)
-                    _swipeType = SwipeType.RIGHT;
-                else if (_difference.x < 0)
-                    _swipeType = SwipeType.LEFT;
+                _swipeType = difference.x > 0 ? SwipeType.RIGHT : SwipeType.LEFT;
             }
 
             SwipeCallback(_swipeType);
