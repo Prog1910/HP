@@ -5,6 +5,7 @@ namespace HighwayPursuit
     public class GameManager : MonoBehaviour
     {
         public static GameManager Singleton;
+
         [HideInInspector] public GameStatus GameStatus = GameStatus.NONE;
         [HideInInspector] public int CurrentCarIndex;
 

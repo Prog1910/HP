@@ -6,16 +6,20 @@ namespace HighwayPursuit
     public class LevelManager : MonoBehaviour
     {
         public static LevelManager Singleton;
+
         [SerializeField] private int _maxRoadsCount = 5;
         [SerializeField] private float _moveSpeed = 5f;
         [SerializeField] private float _roadLength = 10f;
         [SerializeField] private GameObject _roadPrefab;
         [SerializeField] private GameObject[] _vehiclePrefabs;
+
+        private int _lastRoadIndex, _topRoadIndex;
         private Vector3 _nextRoadPosition;
         private GameObject _roadHolder;
         private PlayerController _playerController;
         private List<GameObject> _roadList;
-        private int _lastRoadIndex, _topRoadIndex;
+        private EnemyManager _enemyManager;
+
         public PlayerController PlayerController { get => _playerController; }
         public GameObject[] VehiclePrefabs { get => _vehiclePrefabs; }
 
@@ -37,19 +41,34 @@ namespace HighwayPursuit
             for (int i = 0; i < _maxRoadsCount; i++)
             {
                 GameObject road = Instantiate(_roadPrefab, _nextRoadPosition, Quaternion.identity, _roadHolder.transform);
+                road.name = "Road " + i.ToString();
                 _nextRoadPosition += Vector3.forward * _roadLength;
                 _roadList.Add(road);
             }
 
-            GameObject player = new GameObject("Player");
-            player.transform.position = Vector3.zero;
-            player.AddComponent<PlayerController>();
-            _playerController = player.GetComponent<PlayerController>();
+            _enemyManager = new EnemyManager(_nextRoadPosition, _moveSpeed);
+            SpawnPlayer();
+            _enemyManager.SpawnEnemies(_vehiclePrefabs);
+            _enemyManager.ActivateEnemy();
         }
+
 
         private void Update()
         {
             MoveRoad();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.GetComponent<EnemyController>())
+                _enemyManager.ActivateEnemy();
+        }
+
+        private void SpawnPlayer()
+        {
+            GameObject player = new GameObject("Player");
+            player.transform.position = Vector3.zero;
+            _playerController = player.AddComponent<PlayerController>();
         }
 
         private void MoveRoad()
@@ -60,12 +79,9 @@ namespace HighwayPursuit
             if (_roadList[_lastRoadIndex].transform.position.z <= -_roadLength)
             {
                 _topRoadIndex = Mod(_lastRoadIndex - 1, _roadList.Count);
-
                 _roadList[_lastRoadIndex].transform.position = _roadList[_topRoadIndex].transform.position + transform.forward * _roadLength;
-
                 _lastRoadIndex = Mod(++_lastRoadIndex, _roadList.Count);
             }
-
         }
 
     }

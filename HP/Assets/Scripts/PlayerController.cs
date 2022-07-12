@@ -9,6 +9,7 @@ namespace HighwayPursuit
         [SerializeField] private float _laneWidth = 3f;
         [SerializeField] private float _DOMoveXDuration = 0.15f;
         [SerializeField] private float _crashForce = 100f;
+
         private float _endXPosition;
         private Rigidbody _playerRigidbody;
         private Collider _playerCollider;

@@ -6,11 +6,13 @@ namespace HighwayPursuit
     public class InputManager : MonoBehaviour
     {
         public static InputManager Singleton;
-        private Vector2 _startPosition, _endPosition;
-        private SwipeType _swipeType = SwipeType.NONE;
+
         private float _swipeThreshold = 0.15f;
         private float _swipeTimeLimit = 0.25f;
         private float _startTime, _endTime;
+        private Vector2 _startPosition, _endPosition;
+        private SwipeType _swipeType = SwipeType.NONE;
+        
         public Action<SwipeType> SwipeCallback;
 
         private void Awake()

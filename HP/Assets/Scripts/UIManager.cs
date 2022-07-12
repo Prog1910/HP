@@ -7,8 +7,10 @@ namespace HighwayPursuit
     public class UIManager : MonoBehaviour
     {
         public static UIManager Singleton;
+
         [SerializeField] private GameObject _mainMenuPanel, _gameMenuPanel, _gameOverPanel;
         [SerializeField] private Text _distanceText;
+
         public Text DistanceText { get => _distanceText; }
 
         private void Awake()
