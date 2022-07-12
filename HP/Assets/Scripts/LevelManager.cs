@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace HighwayPursuit
 {
@@ -49,13 +50,13 @@ namespace HighwayPursuit
             _enemyManager = new EnemyManager(_nextRoadPosition, _moveSpeed);
             SpawnPlayer();
             _enemyManager.SpawnEnemies(_vehiclePrefabs);
-            _enemyManager.ActivateEnemy();
         }
 
 
         private void Update()
         {
-            MoveRoad();
+            if (GameManager.Singleton.GameStatus != GameStatus.FAILED)
+                MoveRoad();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -84,5 +85,21 @@ namespace HighwayPursuit
             }
         }
 
+        public void GameStarted()
+        {
+            GameManager.Singleton.GameStatus = GameStatus.PLAYING;
+            _enemyManager.ActivateEnemy();
+            _playerController.GameStarted();
+        }
+
+        public void GameOver()
+        {
+            GameManager.Singleton.GameStatus = GameStatus.FAILED;
+            Camera.main.transform.DOShakePosition(1f, Random.insideUnitCircle.normalized, 5, 10f, false, true).OnComplete
+                (
+                    () => UIManager.Singleton.GameOver()
+                ) ;
+            UIManager.Singleton.GameOver();
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace HighwayPursuit
         private float _startTime, _endTime;
         private Vector2 _startPosition, _endPosition;
         private SwipeType _swipeType = SwipeType.NONE;
-        
+
         public Action<SwipeType> SwipeCallback;
 
         private void Awake()
@@ -51,7 +51,8 @@ namespace HighwayPursuit
                 _swipeType = difference.x > 0 ? SwipeType.RIGHT : SwipeType.LEFT;
             }
 
-            SwipeCallback(_swipeType);
+            if (SwipeCallback != null)
+                SwipeCallback(_swipeType);
         }
 
     }

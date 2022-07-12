@@ -13,6 +13,16 @@ namespace HighwayPursuit
 
         public Text DistanceText { get => _distanceText; }
 
+        private void OnEnable()
+        {
+            //InputManager.Singleton.SwipeCallback += SwipeMethod;
+        }
+
+        private void OnDisable()
+        {
+            //InputManager.Singleton.SwipeCallback -= SwipeMethod;
+        }
+
         private void Awake()
         {
             if (Singleton == null)
@@ -30,6 +40,7 @@ namespace HighwayPursuit
         {
             _mainMenuPanel.SetActive(false);
             _gameMenuPanel.SetActive(true);
+            LevelManager.Singleton.GameStarted();
         }
 
         public void RertyButton()

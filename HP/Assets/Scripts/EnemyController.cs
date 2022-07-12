@@ -9,10 +9,13 @@ namespace HighwayPursuit
 
         private void Update()
         {
-            transform.Translate(-transform.forward * _moveSpeed * Random.Range(0.5f, 1f) * Time.deltaTime);
+            if (GameManager.Singleton.GameStatus == GameStatus.PLAYING)
+            {
+                transform.Translate(-transform.forward * _moveSpeed * Random.Range(0.5f, 1f) * Time.deltaTime);
 
-            if (transform.position.z <= -10)
-                _enemyManager.DeactivateEnemy(this);
+                if (transform.position.z <= -10)
+                    _enemyManager.DeactivateEnemy(this);
+            }
         }
 
         public void SetDefault(float speed, EnemyManager enemyManager)

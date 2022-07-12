@@ -22,11 +22,6 @@ namespace HighwayPursuit
             SpawnVehicle(GameManager.Singleton.CurrentCarIndex);
         }
 
-        private void OnEnable()
-        {
-            InputManager.Singleton.SwipeCallback += SwipeMethod;
-        }
-
         private void OnDisable()
         {
             InputManager.Singleton.SwipeCallback -= SwipeMethod;
@@ -34,14 +29,16 @@ namespace HighwayPursuit
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.name == "Enemy")
+            if (other.GetComponent<EnemyController>())
             {
                 if (GameManager.Singleton.GameStatus == GameStatus.PLAYING)
                 {
                     DOTween.Kill(this);
+                    LevelManager.Singleton.GameOver();
                     _playerRigidbody.isKinematic = false;
                     _playerRigidbody.useGravity = true;
                     _playerRigidbody.AddForce(Random.insideUnitCircle.normalized * _crashForce);
+                    _playerCollider.isTrigger = false;
                 }
             }
         }
