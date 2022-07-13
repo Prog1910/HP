@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using System;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace HighwayPursuit
 {
@@ -19,7 +20,7 @@ namespace HighwayPursuit
         private int _currentCarIndex;
         private Vector3 _startCarHolderPosition;
 
-        public Text DistanceText { get => _distanceText; }
+        public Text DistanceText => _distanceText;
 
         private void Awake()
         {
@@ -55,7 +56,7 @@ namespace HighwayPursuit
             LevelManager.Singleton.GameStarted();
         }
 
-        public void RertyButton()
+        public void RetryButton()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
@@ -63,6 +64,7 @@ namespace HighwayPursuit
         public void GameOver()
         {
             _gameOverPanel.SetActive(true);
+            ResetScore();
         }
 
         public void OpenSelectionPanel(bool value)
@@ -108,6 +110,7 @@ namespace HighwayPursuit
                         _currentCarIndex++;
                     break;
             }
+
             SelectCarPosition();
         }
 
@@ -121,5 +124,14 @@ namespace HighwayPursuit
             }
         }
 
+        private void ResetScore()
+        {
+            _distanceText.text = 0.ToString();
+        }
+
+        public void UpdateScore(int score)
+        {
+            _distanceText.text = score.ToString();
+        }
     }
 }

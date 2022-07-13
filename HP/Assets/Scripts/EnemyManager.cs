@@ -28,7 +28,8 @@ namespace HighwayPursuit
         {
             for (int i = 0; i < vehiclePrefabs.Length; i++)
             {
-                GameObject enemy = Object.Instantiate(vehiclePrefabs[i], _enemySpawnPositions[i % 3], Quaternion.identity, _enemyHolder.transform);
+                GameObject enemy = Object.Instantiate(vehiclePrefabs[i], _enemySpawnPositions[i % 3],
+                    Quaternion.identity, _enemyHolder.transform);
                 enemy.SetActive(false);
                 enemy.name = "Enemy";
                 EnemyController enemyController = enemy.AddComponent<EnemyController>();

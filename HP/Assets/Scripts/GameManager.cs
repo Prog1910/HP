@@ -19,8 +19,5 @@ namespace HighwayPursuit
             else
                 Destroy(gameObject);
         }
-
-
-
     }
 }
